@@ -1,63 +1,78 @@
 import { useState } from 'react';
 import { useCaseStore } from '../../stores/useCaseStore';
 
-interface CaseFormProps {
-  onClose: () => void;
-}
-
-export default function CaseForm({ onClose }: CaseFormProps) {
-  const addCase = useCaseStore(s => s.addCase);
-
-  const [form, setForm] = useState({
+export default function CaseForm({ onClose }: { onClose: () => void }) {
+  const { addCase } = useCaseStore();
+  const [formData, setFormData] = useState({
     caseNumber: '',
     decedentName: '',
-    causeOfDeath: '',
     dateOfDeath: '',
-    status: 'open' as 'open' | 'closed',
-    syncStatus: 'pending' as const,
-    dateCreated: new Date().toISOString(),
+    causeOfDeath: '',
+    status: 'pending' as const,
+    notes: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await addCase(form);
+    await addCase(formData);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 w-full max-w-md space-y-4">
-        <h2 className="text-xl font-bold">New Case</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6">New Case</h2>
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Case Number</label>
-          <input required value={form.caseNumber} onChange={e => setForm(f => ({ ...f, caseNumber: e.target.value }))}
-            className="w-full p-2 border rounded-lg" />
-        </div>
+        <input
+          type="text"
+          placeholder="Case Number"
+          value={formData.caseNumber}
+          onChange={(e) => setFormData({ ...formData, caseNumber: e.target.value })}
+          className="w-full p-3 border rounded mb-4"
+          required
+        />
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Decedent Name</label>
-          <input required value={form.decedentName} onChange={e => setForm(f => ({ ...f, decedentName: e.target.value }))}
-            className="w-full p-2 border rounded-lg" />
-        </div>
+        <input
+          type="text"
+          placeholder="Decedent Name"
+          value={formData.decedentName}
+          onChange={(e) => setFormData({ ...formData, decedentName: e.target.value })}
+          className="w-full p-3 border rounded mb-4"
+          required
+        />
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Cause of Death</label>
-          <input value={form.causeOfDeath} onChange={e => setForm(f => ({ ...f, causeOfDeath: e.target.value }))}
-            className="w-full p-2 border rounded-lg" />
-        </div>
+        <input
+          type="date"
+          value={formData.dateOfDeath}
+          onChange={(e) => setFormData({ ...formData, dateOfDeath: e.target.value })}
+          className="w-full p-3 border rounded mb-4"
+          required
+        />
 
-        <div>
-          <label className="block text-sm font-medium mb-1">Date of Death</label>
-          <input type="date" value={form.dateOfDeath} onChange={e => setForm(f => ({ ...f, dateOfDeath: e.target.value }))}
-            className="w-full p-2 border rounded-lg" />
-        </div>
+        <select
+          value={formData.status}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+          className="w-full p-3 border rounded mb-4"
+        >
+          <option value="pending">Pending</option>
+          <option value="investigating">Investigating</option>
+          <option value="closed">Closed</option>
+        </select>
 
-        <div className="flex gap-3 pt-2">
-          <button type="button" onClick={onClose}
-            className="flex-1 p-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-          <button type="submit"
-            className="flex-1 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
+        <textarea
+          placeholder="Cause of Death / Notes"
+          value={formData.causeOfDeath}
+          onChange={(e) => setFormData({ ...formData, causeOfDeath: e.target.value })}
+          className="w-full p-3 border rounded mb-4 h-24"
+        />
+
+        <div className="flex gap-3">
+          <button type="button" onClick={onClose} className="flex-1 py-3 border rounded-lg">
+            Cancel
+          </button>
+          <button type="submit" className="flex-1 py-3 bg-blue-600 text-white rounded-lg">
+            Save Case
+          </button>
         </div>
       </form>
     </div>

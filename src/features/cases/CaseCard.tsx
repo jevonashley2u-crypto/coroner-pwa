@@ -8,7 +8,9 @@ export default function CaseCard({ caseItem }: { caseItem: any }) {
       <div className="flex justify-between">
         <h3 className="font-semibold text-xl">{caseItem.decedentName}</h3>
         <span className={`px-3 py-1 rounded-full text-sm ${
-          caseItem.status === 'closed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+          caseItem.status === 'closed' ? 'bg-green-100 text-green-700' :
+          caseItem.status === 'investigating' ? 'bg-blue-100 text-blue-700' :
+          'bg-yellow-100 text-yellow-700'
         }`}>
           {caseItem.status}
         </span>
