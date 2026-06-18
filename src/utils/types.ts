@@ -1,45 +1,33 @@
 export interface Case {
-  id?: number
-  supabaseId?: number | null
+  id: string
   caseNumber: string
-  status: 'active' | 'closed' | 'pending'
-  syncStatus: 'pending' | 'synced' | 'failed'
-  dateCreated: string
-  dateModified: string
-  decedentName?: string | null
-  address?: string | null
-  latitude?: number | null
-  longitude?: number | null
-  ambientTemperature?: number | null
-  bodyTemperature?: number | null
+  decedentName: string
+  causeOfDeath?: string
+  address?: string
+  latitude?: number
+  longitude?: number
+  ambientTemperature?: number
+  bodyTemperature?: number
   temperatureUnit?: string
-  weatherConditions?: string | null
-  investigatingOfficer?: string | null
-  notes?: string | null
+  weatherConditions?: string
+  investigatingOfficer?: string
+  notes?: string
   images?: string[]
-  medicalDevices?: unknown[]
+  syncStatus: 'pending' | 'synced'
+  updatedAt: string
+  dateCreated: string
 }
 
 export interface PhysicalMark {
   id?: number
-  supabaseId?: number | null
-  caseId: number
+  caseId: string
   type: string
   description?: string | null
   bodyLocation?: string | null
   sizeMm?: string | null
   color?: string | null
   shape?: string | null
-  orientation?: string | null
-  imageBase64?: string | null
   notes?: string | null
-  syncStatus: 'pending' | 'synced' | 'failed'
+  syncStatus: 'pending' | 'synced'
   dateCreated: string
-}
-
-export interface SyncStatus {
-  syncing: boolean
-  error: string | null
-  pendingCases: number
-  pendingMarks: number
 }

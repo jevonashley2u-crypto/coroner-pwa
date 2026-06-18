@@ -1,14 +1,16 @@
 import Dexie, { type Table } from 'dexie'
 import type { Case, PhysicalMark } from '../utils/types'
 
+export type { Case, PhysicalMark }
+
 class AppDatabase extends Dexie {
-  cases!: Table<Case, number>
+  cases!: Table<Case, string>
   physicalMarks!: Table<PhysicalMark, number>
 
   constructor() {
     super('CoronerFieldIntake')
     this.version(1).stores({
-      cases: '++id, caseNumber, status, syncStatus, dateCreated, dateModified',
+      cases: 'id, caseNumber, decedentName, syncStatus, dateCreated, updatedAt',
       physicalMarks: '++id, caseId, type, syncStatus, dateCreated',
     })
   }
