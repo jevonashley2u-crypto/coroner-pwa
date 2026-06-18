@@ -12,8 +12,10 @@ export default function CaseForm({ onClose }: CaseFormProps) {
     caseNumber: '',
     decedentName: '',
     causeOfDeath: '',
-    dateCreated: new Date().toISOString(),
+    dateOfDeath: '',
+    status: 'open' as 'open' | 'closed',
     syncStatus: 'pending' as const,
+    dateCreated: new Date().toISOString(),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,6 +44,12 @@ export default function CaseForm({ onClose }: CaseFormProps) {
         <div>
           <label className="block text-sm font-medium mb-1">Cause of Death</label>
           <input value={form.causeOfDeath} onChange={e => setForm(f => ({ ...f, causeOfDeath: e.target.value }))}
+            className="w-full p-2 border rounded-lg" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Date of Death</label>
+          <input type="date" value={form.dateOfDeath} onChange={e => setForm(f => ({ ...f, dateOfDeath: e.target.value }))}
             className="w-full p-2 border rounded-lg" />
         </div>
 

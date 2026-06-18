@@ -10,7 +10,7 @@ class AppDatabase extends Dexie {
   constructor() {
     super('CoronerFieldIntake')
     this.version(1).stores({
-      cases: 'id, caseNumber, decedentName, syncStatus, dateCreated, updatedAt',
+      cases: 'id, caseNumber, decedentName, status, syncStatus, dateCreated, updatedAt',
       physicalMarks: '++id, caseId, type, syncStatus, dateCreated',
     })
   }

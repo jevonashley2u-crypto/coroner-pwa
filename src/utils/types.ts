@@ -13,7 +13,9 @@ export interface Case {
   investigatingOfficer?: string
   notes?: string
   images?: string[]
+  status: 'open' | 'closed'
   syncStatus: 'pending' | 'synced'
+  dateOfDeath?: string
   updatedAt: string
   dateCreated: string
 }
