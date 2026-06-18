@@ -27,6 +27,9 @@ export default function OnboardingTutorial() {
     if (!localStorage.getItem('forensic_tutorial_completed')) {
       setShow(true)
     }
+    const handler = () => { localStorage.removeItem('forensic_tutorial_completed'); setShow(true); setStep(0) }
+    window.addEventListener('show-tutorial', handler)
+    return () => window.removeEventListener('show-tutorial', handler)
   }, [])
 
   const done = () => {

@@ -249,6 +249,12 @@ export default function App() {
         >
           Sign out
         </button>
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('show-tutorial'))}
+          className="ml-2 rounded-lg px-2 py-1 text-[11px] text-[var(--color-text-muted)] hover:text-white"
+        >
+          Tutorial
+        </button>
       </div>
 
       {/* offline banner */}
