@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function SplashPage() {
   const navigate = useNavigate()
-  const [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(true)
 
   return (
     <div className="fixed inset-0 z-50 bg-black flex flex-col">
