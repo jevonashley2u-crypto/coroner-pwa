@@ -55,8 +55,12 @@ class AuthService {
 
     this.client = createClient(url, anonKey)
 
-    const { data } = await this.client.auth.getSession()
-    this.session = data.session
+    try {
+      const { data } = await this.client.auth.getSession()
+      this.session = data.session
+    } catch {
+      this.session = null
+    }
     this.readyResolve?.()
     this.notify()
 

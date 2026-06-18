@@ -142,9 +142,9 @@ export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
   useEffect(() => {
-    authService.initialize().then(() => {
-      setAuthenticated(authService.isAuthenticated)
-    })
+    authService.initialize()
+      .then(() => setAuthenticated(authService.isAuthenticated))
+      .catch(() => setAuthenticated(false))
     const unsub = authService.subscribe(session => {
       setAuthenticated(!!session)
     })
@@ -206,8 +206,9 @@ export default function App() {
 
   if (authenticated === null) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg)]">
-        <p className="text-[var(--color-text-muted)]">Loading…</p>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[var(--color-bg)]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-accent)] border-t-transparent" />
+        <p className="text-sm text-[var(--color-text-muted)]">Initializing…</p>
       </div>
     )
   }
