@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const STEPS = [
   {
@@ -19,16 +19,22 @@ const STEPS = [
   },
 ]
 
-export default function OnboardingTutorial({ onComplete }: { onComplete: () => void }) {
+export default function OnboardingTutorial() {
+  const [show, setShow] = useState(false)
   const [step, setStep] = useState(0)
 
-  const handleNext = () => {
-    if (step < STEPS.length - 1) {
-      setStep(step + 1)
-    } else {
-      onComplete()
+  useEffect(() => {
+    if (!localStorage.getItem('forensic_tutorial_completed')) {
+      setShow(true)
     }
+  }, [])
+
+  const done = () => {
+    localStorage.setItem('forensic_tutorial_completed', 'true')
+    setShow(false)
   }
+
+  if (!show) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
@@ -38,7 +44,7 @@ export default function OnboardingTutorial({ onComplete }: { onComplete: () => v
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-indigo-400">
               Field Guide {step + 1} / {STEPS.length}
             </span>
-            <button onClick={onComplete} className="font-mono text-xs uppercase tracking-wider text-slate-500 hover:text-slate-300">
+            <button onClick={done} className="font-mono text-xs uppercase tracking-wider text-slate-500 hover:text-slate-300">
               Skip
             </button>
           </div>
@@ -61,7 +67,7 @@ export default function OnboardingTutorial({ onComplete }: { onComplete: () => v
           </div>
 
           <button
-            onClick={handleNext}
+            onClick={() => step < STEPS.length - 1 ? setStep(step + 1) : done()}
             className="h-11 rounded-lg bg-indigo-600 px-5 text-xs font-bold uppercase tracking-wider text-white transition-transform active:scale-95"
           >
             {step === STEPS.length - 1 ? 'Finish & Start' : 'Next Step'}

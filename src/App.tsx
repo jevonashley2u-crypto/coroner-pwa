@@ -214,23 +214,9 @@ export default function App() {
 
   if (!authenticated) return <AuthScreen />
 
-  const [showTutorial, setShowTutorial] = useState(
-    () => !localStorage.getItem('forensic_tutorial_completed'),
-  )
-
-  if (showTutorial) {
-    return (
-      <OnboardingTutorial
-        onComplete={() => {
-          localStorage.setItem('forensic_tutorial_completed', 'true')
-          setShowTutorial(false)
-        }}
-      />
-    )
-  }
-
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
+      <OnboardingTutorial />
       <IOSInstallPrompt />
 
       {/* sync status bar */}
