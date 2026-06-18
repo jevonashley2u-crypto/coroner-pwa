@@ -1,6 +1,5 @@
 {
   "framework": "vite",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!assets/|favicon|manifest|sw|workbox).*)", "destination": "/index.html" }]
+  "outputDirectory": "dist"
 }
